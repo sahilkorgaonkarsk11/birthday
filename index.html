@@ -6,7 +6,7 @@
     <title>Saniya's Party Mode!</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Syncopate:wght@700&family=Poppins:wght@400;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Syncopate:wght@700&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -41,18 +41,19 @@
             z-index: 10;
         }
 
-        .step-container { display: none; width: 100%; text-align: center; }
+        .step-container { display: none; width: 100%; text-align: center; padding: 20px; }
         .active { display: block !important; }
 
         .saniya-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 8vw, 5rem);
-            letter-spacing: 10px;
+            font-size: clamp(2.5rem, 10vw, 6rem);
+            letter-spacing: 12px;
             background: linear-gradient(to right, var(--neon-blue), #fff, var(--neon-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.5));
+            filter: drop-shadow(0 0 15px rgba(0, 242, 255, 0.6));
             margin-bottom: 2rem;
+            line-height: 1.2;
         }
 
         .btn-proceed {
@@ -60,97 +61,84 @@
             border: 2px solid var(--neon-pink);
             color: white;
             font-family: 'Syncopate', sans-serif;
-            padding: 20px 50px;
-            font-size: 1.2rem;
+            padding: 18px 45px;
+            font-size: 1rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
             box-shadow: 0 0 15px var(--neon-pink);
-            transition: 0.3s;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
+            border-radius: 50px;
         }
 
         .btn-proceed:hover {
             background: var(--neon-pink);
             color: #000;
-            box-shadow: 0 0 40px var(--neon-pink);
-            transform: translateY(-5px);
+            box-shadow: 0 0 50px var(--neon-pink);
+            transform: scale(1.05);
         }
 
         .party-card {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid var(--neon-blue);
-            box-shadow: 0 0 20px var(--neon-blue);
-            border-radius: 20px;
+            background: rgba(15, 15, 15, 0.7);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
+            border-radius: 30px;
             padding: 40px;
-            max-width: 650px;
+            max-width: 700px;
             margin: 0 auto;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
         }
 
-        /* Wish Styling */
-        #wish-text {
-            font-family: 'Syncopate', sans-serif;
-            font-size: 1.5rem;
-            min-height: 100px;
-            color: var(--neon-blue);
-            text-shadow: 0 0 10px var(--neon-blue);
-        }
-
-        /* Photo Grid Styling */
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            justify-items: center;
-            margin-top: 20px;
-        }
-
-        .scratch-box {
+        .scratch-wrap {
             position: relative;
-            width: 150px;
-            height: 150px;
-        }
-
-        .scratch-box canvas {
-            position: absolute;
-            top: 0; left: 0;
-            border-radius: 10px;
-            cursor: crosshair;
-        }
-
-        .scratch-box img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 2px solid white;
-        }
-
-        /* Moving Collage Styling */
-        .collage-photo {
-            width: 150px;
-            background: white;
-            padding: 8px 8px 25px 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            position: absolute;
-            z-index: 100;
-            pointer-events: auto;
-        }
-        .collage-photo img { width: 100%; height: 120px; object-fit: cover; }
-
-        #scratch-canvas-main {
-            border: 4px solid var(--neon-yellow);
-            border-radius: 15px;
+            width: 100%;
+            max-width: 400px;
+            height: 250px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 3px solid var(--neon-yellow);
         }
 
         .number-bg {
-            background: black;
-            width: 400px; height: 250px;
-            margin: 0 auto;
-            border-radius: 15px;
+            background: #000;
+            width: 100%; height: 100%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 120px; font-weight: 800; color: var(--neon-yellow);
+            font-size: 38px; text-align: center; padding: 20px;
+            font-weight: 800; color: var(--neon-yellow);
             font-family: 'Orbitron', sans-serif;
         }
+
+        #scratch-canvas-main { position: absolute; top: 0; left: 0; touch-action: none; }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .scratch-box {
+            position: relative; width: 100%; aspect-ratio: 1/1;
+            border-radius: 15px; overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .scratch-box canvas { position: absolute; top: 0; left: 0; z-index: 2; touch-action: none; width: 100%; height: 100%; }
+        .scratch-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .collage-container { height: 100vh; overflow: hidden; width: 100%; display: flex; justify-content: center; }
+        .collage-track { display: flex; flex-direction: column; gap: 40px; padding: 100px 0; }
+        
+        .polaroid {
+            width: 280px; background: white; padding: 12px 12px 40px 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: rotate(var(--r));
+            color: #333; font-family: 'Syncopate'; font-size: 10px;
+        }
+        .polaroid img { width: 100%; height: 200px; object-fit: cover; }
+
+        #reveal-btn-container { margin-top: 25px; min-height: 80px; display: flex; justify-content: center; }
     </style>
 </head>
 <body>
@@ -159,87 +147,122 @@
 
     <div class="main-wrapper">
         <div id="step1" class="step-container active">
-            <h1 class="saniya-title animate__animated animate__zoomIn">SANIYA<br>THE ITIIAN</h1>
-            <button class="btn-proceed animate__animated animate__pulse animate__infinite" onclick="goToStep(2)">CLICK TO PROCEED</button>
+            <h1 class="saniya-title animate__animated animate__backInDown">SANIYA<br>THE ITIIAN</h1>
+            <button class="btn-proceed" onclick="goToStep(2)">START CELEBRATION</button>
         </div>
 
-        <div id="step2" class="step-container px-4">
-            <div class="party-card animate__animated animate__jackInTheBox">
-                <h2 style="font-family: 'Syncopate';">GUESS WHAT?</h2>
-                <p class="h4 mt-4" style="color: var(--neon-blue);">Something is behind this 👇</p>
-                <button class="btn btn-outline-info w-100 fw-bold py-3 mt-4" onclick="goToStep(3)">REVEAL THE SECRET</button>
+        <div id="step2" class="step-container">
+            <div class="party-card">
+                <h2 class="mb-4" style="font-family: 'Syncopate';">SURPRISE WAITING...</h2>
+                <p class="h5 opacity-75 mb-5">We've hidden a special message for you.</p>
+                <button class="btn-proceed" onclick="goToStep(3)">REVEAL IT</button>
             </div>
         </div>
 
-        <div id="step3" class="step-container px-4">
-            <div class="party-card animate__animated animate__flipInY">
-                <p class="text-uppercase fw-bold mb-4" style="color: var(--neon-yellow); letter-spacing: 3px;">Scratch completely to continue</p>
-                <div class="position-relative" style="width: 400px; height: 250px; margin: 0 auto;">
-                    <div class="number-bg">21</div>
-                    <canvas id="scratch-canvas-main" width="400" height="250" style="position:absolute; top:0; left:0;"></canvas>
+        <div id="step3" class="step-container">
+            <div class="party-card">
+                <p class="text-uppercase small fw-bold mb-4" style="color: var(--neon-yellow); letter-spacing: 4px;">Scratch to uncover</p>
+                <div class="scratch-wrap">
+                    <div class="number-bg">HAPPY 21st<br>BIRTHDAY</div>
+                    <canvas id="scratch-canvas-main" width="400" height="250"></canvas>
                 </div>
-                <div id="reveal-btn-container" style="margin-top:20px; height:60px;">
+                <div id="reveal-btn-container">
                     <button id="enter-btn" class="btn-proceed" style="display: none;" onclick="goToStep(4)">GO TO WISHES</button>
                 </div>
             </div>
         </div>
 
-        <div id="step4" class="step-container px-4">
+        <div id="step4" class="step-container">
             <div class="party-card">
-                <div id="wish-text" class="animate__animated"></div>
-                <div id="wish-btn-space" style="margin-top:30px; height:60px;"></div>
+                <div id="wish-text" class="animate__animated h3"></div>
+                <div id="wish-btn-space" class="mt-5"></div>
             </div>
         </div>
 
-        <div id="step5" class="step-container px-4">
-            <div class="party-card" style="max-width: 800px;">
-                <h3 class="mb-4" style="font-family: 'Syncopate';">SCRATCH YOUR MEMORIES</h3>
-                <div class="photo-grid" id="photo-grid-container">
-                    </div>
-                <button id="collage-btn" class="btn-proceed mt-5" style="display:none;" onclick="goToStep(6)">VIEW COLLAGE</button>
+        <div id="step5" class="step-container">
+            <div class="party-card">
+                <h3 class="mb-4" style="font-family: 'Syncopate';">UNCOVER MEMORIES</h3>
+                <div class="photo-grid" id="photo-grid-container"></div>
+                <div id="reveal-btn-container">
+                    <button id="collage-btn" class="btn-proceed" style="display:none;" onclick="goToStep(6)">FINAL SURPRISE</button>
+                </div>
             </div>
         </div>
 
-        <div id="step6" class="step-container" style="width:100vw; height:100vh; position:fixed; top:0; left:0;">
+        <div id="step6" class="step-container p-0" style="width:100vw; height:100vh; position:fixed; top:0; left:0;">
+            <div class="collage-container">
+                <div class="collage-track" id="collage-wrapper"></div>
             </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <script>
-        const wishes = [
-            "HAPPY BIRTHDAY SANIYA!",
-            "TO THE MOST AMAZING ITIIAN...",
-            "MAY YOUR DAY BE AS BRIGHT AS THESE NEONS!",
-            "KEEP SHINING AND KEEP SMILING!",
-            "READY TO SEE YOUR MEMORIES?"
-        ];
+        // Setup image names based on your files
+        const myPhotos = ["pic1.jpeg", "pic2.jpeg", "pic3.jpeg", "pic4.jpeg", "pic5.jpeg", "pic6.jpeg", "pic7.jpeg", "pic8.jpeg", "pic9.jpeg", "pic10.jpeg"];
+        const wishes = ["HAPPY BIRTHDAY SANIYA!", "TO THE BRIGHTEST ITIIAN...", "MAY YOUR CODE ALWAYS COMPILE!", "STAY AWESOME, STAY NEON.", "ONE LAST THING..."];
 
         function goToStep(num) {
             document.querySelectorAll('.step-container').forEach(s => s.classList.remove('active'));
             document.getElementById('step' + num).classList.add('active');
-            
-            if(num === 3) initMainScratch();
+            if(num === 3) initScratch('scratch-canvas-main', 400, 250, () => document.getElementById('enter-btn').style.display = 'inline-block');
             if(num === 4) startWishes();
             if(num === 5) initPhotoGrid();
-            if(num === 6) startMovingCollage();
+            if(num === 6) startVerticalScroll();
         }
 
-        // Background Animation
+        function initScratch(id, w, h, callback) {
+            const canvas = document.getElementById(id);
+            const ctx = canvas.getContext('2d', { willReadFrequently: true });
+            ctx.fillStyle = '#333';
+            ctx.fillRect(0, 0, w, h);
+            ctx.fillStyle = '#888';
+            ctx.font = '14px Poppins';
+            ctx.textAlign = 'center';
+            ctx.fillText('SCRATCH HERE', w/2, h/2 + 5);
+
+            let isDrawing = false;
+            const scratch = (x, y) => {
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath(); ctx.arc(x, y, 30, 0, Math.PI * 2); ctx.fill();
+                const imageData = ctx.getImageData(0, 0, w, h).data;
+                let count = 0;
+                for (let i = 3; i < imageData.length; i += 40) if (imageData[i] === 0) count++;
+                if (count > (imageData.length / 40) * 0.5) {
+                    canvas.style.pointerEvents = 'none';
+                    gsap.to(canvas, { opacity: 0, duration: 1, onComplete: callback });
+                }
+            };
+
+            const getPos = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return { x: clientX - rect.left, y: clientY - rect.top };
+            };
+
+            ['mousedown', 'touchstart'].forEach(ev => canvas.addEventListener(ev, (e) => { isDrawing = true; const p = getPos(e); scratch(p.x, p.y); }));
+            ['mousemove', 'touchmove'].forEach(ev => canvas.addEventListener(ev, (e) => { if(!isDrawing) return; e.preventDefault(); const p = getPos(e); scratch(p.x, p.y); }));
+            ['mouseup', 'touchend'].forEach(ev => window.addEventListener(ev, () => isDrawing = false));
+        }
+
+        // BG Particles
         const bgCanvas = document.getElementById('bg-canvas');
         const bgCtx = bgCanvas.getContext('2d');
         let particles = [];
         function initBg() {
             bgCanvas.width = window.innerWidth; bgCanvas.height = window.innerHeight;
-            particles = Array.from({length: 80}, () => ({
+            particles = Array.from({length: 60}, () => ({
                 x: Math.random() * bgCanvas.width, y: Math.random() * bgCanvas.height,
-                size: Math.random() * 2 + 1, vx: Math.random() - 0.5, vy: Math.random() - 0.5,
+                size: Math.random() * 2, vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
                 color: Math.random() > 0.5 ? '#ff00ff' : '#00f2ff'
             }));
         }
         function drawBg() {
-            bgCtx.clearRect(0,0,bgCanvas.width, bgCanvas.height);
+            bgCtx.fillStyle = 'rgba(5, 5, 5, 0.2)';
+            bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
             particles.forEach(p => {
                 p.x += p.vx; p.y += p.vy;
                 if(p.x<0 || p.x>bgCanvas.width) p.vx*=-1; if(p.y<0 || p.y>bgCanvas.height) p.vy*=-1;
@@ -249,102 +272,51 @@
         }
         initBg(); drawBg(); window.onresize = initBg;
 
-        // Main Scratch Logic
-        function initMainScratch() {
-            const canvas = document.getElementById('scratch-canvas-main');
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#444'; ctx.fillRect(0,0,400,250);
-            ctx.fillStyle = '#888'; ctx.font = '20px Poppins'; ctx.textAlign = 'center';
-            ctx.fillText('SCRATCH SANIYA!', 200, 135);
-
-            const handleMove = (e) => {
-                const rect = canvas.getBoundingClientRect();
-                const x = (e.clientX || e.touches[0].clientX) - rect.left;
-                const y = (e.clientY || e.touches[0].clientY) - rect.top;
-                ctx.globalCompositeOperation = 'destination-out';
-                ctx.beginPath(); ctx.arc(x, y, 35, 0, Math.PI*2); ctx.fill();
-                
-                // Check percentage
-                const pixels = ctx.getImageData(0,0,400,250).data;
-                let clear = 0;
-                for(let i=3; i<pixels.length; i+=4) if(pixels[i] === 0) clear++;
-                if((clear/(400*250)) > 0.5) document.getElementById('enter-btn').style.display = 'block';
-            };
-            canvas.onmousemove = (e) => e.buttons === 1 && handleMove(e);
-            canvas.ontouchmove = (e) => { handleMove(e); e.preventDefault(); };
-        }
-
-        // Wishes logic
         async function startWishes() {
             const display = document.getElementById('wish-text');
             for(let wish of wishes) {
-                display.className = "animate__animated animate__fadeIn";
                 display.innerText = wish;
-                await new Promise(r => setTimeout(r, 2500));
-                display.className = "animate__animated animate__fadeOut";
-                await new Promise(r => setTimeout(r, 800));
+                display.className = "animate__animated animate__zoomIn";
+                await new Promise(r => setTimeout(r, 2000));
+                display.className = "animate__animated animate__zoomOut";
+                await new Promise(r => setTimeout(r, 600));
             }
-            document.getElementById('wish-btn-space').innerHTML = `<button class="btn-proceed" onclick="goToStep(5)">SEE PHOTOS</button>`;
+            document.getElementById('wish-btn-space').innerHTML = `<button class="btn-proceed" onclick="goToStep(5)">SEE MEMORIES</button>`;
         }
 
-        // Photo Grid Scratch Logic
-        let scratchedPhotos = 0;
+        let solvedGrid = 0;
         function initPhotoGrid() {
             const container = document.getElementById('photo-grid-container');
-            for(let i=1; i<=5; i++) {
-                const div = document.createElement('div');
-                div.className = "scratch-box";
-                div.innerHTML = `<img src="https://picsum.photos/200?random=${i+20}"><canvas width="150" height="150"></canvas>`;
-                container.appendChild(div);
-                const canvas = div.querySelector('canvas');
-                const ctx = canvas.getContext('2d');
-                ctx.fillStyle = "#666"; ctx.fillRect(0,0,150,150);
-                
-                let isDone = false;
-                const scratch = (e) => {
-                    const rect = canvas.getBoundingClientRect();
-                    const x = (e.clientX || e.touches[0].clientX) - rect.left;
-                    const y = (e.clientY || e.touches[0].clientY) - rect.top;
-                    ctx.globalCompositeOperation = 'destination-out';
-                    ctx.beginPath(); ctx.arc(x, y, 20, 0, Math.PI*2); ctx.fill();
-                    if(!isDone) {
-                        scratchedPhotos++; isDone = true;
-                        if(scratchedPhotos >= 5) document.getElementById('collage-btn').style.display = 'inline-block';
-                    }
-                };
-                canvas.onmousemove = (e) => e.buttons === 1 && scratch(e);
-                canvas.ontouchmove = (e) => { scratch(e); e.preventDefault(); };
+            container.innerHTML = "";
+            // Use first 6 photos for the grid
+            for(let i=0; i<6; i++) {
+                const box = document.createElement('div');
+                box.className = "scratch-box";
+                const id = `grid-canvas-${i}`;
+                box.innerHTML = `<img src="${myPhotos[i]}"><canvas id="${id}"></canvas>`;
+                container.appendChild(box);
+                setTimeout(() => {
+                    initScratch(id, 150, 150, () => {
+                        solvedGrid++;
+                        if(solvedGrid >= 6) document.getElementById('collage-btn').style.display = 'inline-block';
+                    });
+                }, 100);
             }
         }
 
-        // Moving Collage Logic
-        function startMovingCollage() {
-            const step = document.getElementById('step6');
-            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
-            
-            for(let i=0; i<15; i++) {
-                const photo = document.createElement('div');
-                photo.className = "collage-photo";
-                photo.innerHTML = `<img src="https://picsum.photos/200?random=${i+50}">`;
-                step.appendChild(photo);
-                
-                // GSAP Floating Animation
-                gsap.set(photo, { 
-                    x: Math.random() * window.innerWidth, 
-                    y: Math.random() * window.innerHeight,
-                    rotation: Math.random() * 40 - 20
-                });
-                
-                gsap.to(photo, {
-                    x: "+=" + (Math.random() * 400 - 200),
-                    y: "+=" + (Math.random() * 400 - 200),
-                    rotation: "+=" + (Math.random() * 20 - 10),
-                    duration: 5 + Math.random() * 5,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: "sine.inOut"
-                });
-            }
+        function startVerticalScroll() {
+            const track = document.getElementById('collage-wrapper');
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            // Create a long list using all 10 photos twice for continuous scroll
+            const longList = [...myPhotos, ...myPhotos];
+            longList.forEach((imgSrc) => {
+                const card = document.createElement('div');
+                card.className = "polaroid";
+                card.style.setProperty('--r', (Math.random() * 10 - 5) + 'deg');
+                card.innerHTML = `<img src="${imgSrc}"><p class="mt-3 text-center">HAPPY 21st SANIYA</p>`;
+                track.appendChild(card);
+            });
+            gsap.to(track, { y: -track.offsetHeight / 2, duration: 25, ease: "none", repeat: -1 });
         }
     </script>
 </body>
